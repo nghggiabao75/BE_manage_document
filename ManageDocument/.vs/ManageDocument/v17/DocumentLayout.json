@@ -1,0 +1,100 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Code\\manage_document\\ManageDocument\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{011F3D42-5527-45DD-8B50-DD9E530785FB}|ManageDocument\\ManageDocument.csproj|c:\\code\\manage_document\\managedocument\\managedocument\\cqrs\\queries\\documentdetails\\getdocumentdetails\\getdocumentdetailsquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{011F3D42-5527-45DD-8B50-DD9E530785FB}|ManageDocument\\ManageDocument.csproj|solutionrelative:managedocument\\cqrs\\queries\\documentdetails\\getdocumentdetails\\getdocumentdetailsquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{011F3D42-5527-45DD-8B50-DD9E530785FB}|ManageDocument\\ManageDocument.csproj|c:\\code\\manage_document\\managedocument\\managedocument\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{011F3D42-5527-45DD-8B50-DD9E530785FB}|ManageDocument\\ManageDocument.csproj|solutionrelative:managedocument\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{011F3D42-5527-45DD-8B50-DD9E530785FB}|ManageDocument\\ManageDocument.csproj|c:\\code\\manage_document\\managedocument\\managedocument\\controllers\\documentdetailscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{011F3D42-5527-45DD-8B50-DD9E530785FB}|ManageDocument\\ManageDocument.csproj|solutionrelative:managedocument\\controllers\\documentdetailscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GetDocumentDetailsQuery.cs",
+              "DocumentMoniker": "C:\\Code\\manage_document\\ManageDocument\\ManageDocument\\CQRS\\Queries\\DocumentDetails\\GetDocumentDetails\\GetDocumentDetailsQuery.cs",
+              "RelativeDocumentMoniker": "ManageDocument\\CQRS\\Queries\\DocumentDetails\\GetDocumentDetails\\GetDocumentDetailsQuery.cs",
+              "ToolTip": "C:\\Code\\manage_document\\ManageDocument\\ManageDocument\\CQRS\\Queries\\DocumentDetails\\GetDocumentDetails\\GetDocumentDetailsQuery.cs",
+              "RelativeToolTip": "ManageDocument\\CQRS\\Queries\\DocumentDetails\\GetDocumentDetails\\GetDocumentDetailsQuery.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T14:11:53.738Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Code\\manage_document\\ManageDocument\\ManageDocument\\appsettings.json",
+              "RelativeDocumentMoniker": "ManageDocument\\appsettings.json",
+              "ToolTip": "C:\\Code\\manage_document\\ManageDocument\\ManageDocument\\appsettings.json",
+              "RelativeToolTip": "ManageDocument\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-26T15:13:39.85Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DocumentDetailsController.cs",
+              "DocumentMoniker": "C:\\Code\\manage_document\\ManageDocument\\ManageDocument\\Controllers\\DocumentDetailsController.cs",
+              "RelativeDocumentMoniker": "ManageDocument\\Controllers\\DocumentDetailsController.cs",
+              "ToolTip": "C:\\Code\\manage_document\\ManageDocument\\ManageDocument\\Controllers\\DocumentDetailsController.cs",
+              "RelativeToolTip": "ManageDocument\\Controllers\\DocumentDetailsController.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAwwGQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T14:50:58.614Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 550,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
