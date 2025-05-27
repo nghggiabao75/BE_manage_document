@@ -1,0 +1,44 @@
+USE managedocument;
+
+DELIMITER //
+
+CREATE TRIGGER after_document_detail_insert
+AFTER INSERT ON documentdetails
+FOR EACH ROW
+BEGIN
+    UPDATE documents
+    SET TotalAmount = (
+        SELECT SUM(Amount) 
+        FROM documentdetails 
+        WHERE DocumentNumber = NEW.DocumentNumber
+    )
+    WHERE DocumentNumber = NEW.DocumentNumber;
+END //
+
+CREATE TRIGGER after_document_detail_update
+AFTER UPDATE ON documentdetails
+FOR EACH ROW
+BEGIN
+    UPDATE documents
+    SET TotalAmount = (
+        SELECT SUM(Amount) 
+        FROM documentdetails 
+        WHERE DocumentNumber = NEW.DocumentNumber
+    )
+    WHERE DocumentNumber = NEW.DocumentNumber;
+END //
+
+CREATE TRIGGER after_document_detail_delete
+AFTER DELETE ON documentdetails
+FOR EACH ROW
+BEGIN
+    UPDATE documents
+    SET TotalAmount = (
+        SELECT IFNULL(SUM(Amount), 0)
+        FROM documentdetails 
+        WHERE DocumentNumber = OLD.DocumentNumber
+    )
+    WHERE DocumentNumber = OLD.DocumentNumber;
+END //
+
+DELIMITER ;

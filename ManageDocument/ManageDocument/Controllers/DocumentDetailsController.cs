@@ -10,6 +10,7 @@ using ManageDocument.CQRS.Commands.DocumentDetails.DeleteDocumentDetail;
 using ManageDocument.CQRS.Queries.DocumentDetails.GetDocumentDetail;
 using ManageDocument.CQRS.Queries.DocumentDetails.GetDocumentDetails;
 using ManageDocument.CQRS.Queries.DocumentDetails.GetDocumentDetailsByDocument;
+using System.ComponentModel.DataAnnotations;
 
 namespace ManageDocument.Controllers
 {
@@ -24,7 +25,6 @@ namespace ManageDocument.Controllers
             _mediator = mediator;
         }
 
-        // GET: api/DocumentDetails
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DocumentDetail>>> GetDocumentDetails()
         {
@@ -32,7 +32,6 @@ namespace ManageDocument.Controllers
             return Ok(result);
         }
 
-        // GET: api/DocumentDetails/5
         [HttpGet("{accountCode}")]
         public async Task<ActionResult<DocumentDetail>> GetDocumentDetail(int accountCode)
         {
@@ -44,7 +43,6 @@ namespace ManageDocument.Controllers
             return Ok(documentDetail);
         }
 
-        // GET: api/DocumentDetails/document/5
         [HttpGet("document/{documentNumber}")]
         public async Task<ActionResult<IEnumerable<DocumentDetail>>> GetDocumentDetailsByDocument(int documentNumber)
         {
@@ -52,28 +50,39 @@ namespace ManageDocument.Controllers
             return Ok(result);
         }
 
-        // POST: api/DocumentDetails
         [HttpPost]
-        public async Task<ActionResult<DocumentDetail>> CreateDocumentDetail(CreateDocumentDetailDto dto)
+        public async Task<ActionResult<DocumentDetail>> CreateDocumentDetail([FromBody] CreateDocumentDetailDto dto)
         {
-            var accountCode = await _mediator.Send(new CreateDocumentDetailCommand(dto));
-            var documentDetail = await _mediator.Send(new GetDocumentDetailQuery(accountCode));
-            return CreatedAtAction(nameof(GetDocumentDetail), new { accountCode }, documentDetail);
-        }
-
-        // PUT: api/DocumentDetails/5
-        [HttpPut("{accountCode}")]
-        public async Task<IActionResult> UpdateDocumentDetail(int accountCode, UpdateDocumentDetailDto dto)
-        {
-            var result = await _mediator.Send(new UpdateDocumentDetailCommand(accountCode, dto));
-            if (!result)
+            try
             {
-                return NotFound();
+                var accountCode = await _mediator.Send(new CreateDocumentDetailCommand(dto));
+                var documentDetail = await _mediator.Send(new GetDocumentDetailQuery(accountCode));
+                return CreatedAtAction(nameof(GetDocumentDetail), new { accountCode }, documentDetail);
             }
-            return NoContent();
+            catch (ValidationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
-        // DELETE: api/DocumentDetails/5
+        [HttpPut("{accountCode}")]
+        public async Task<IActionResult> UpdateDocumentDetail(int accountCode, [FromBody] UpdateDocumentDetailDto dto)
+        {
+            try
+            {
+                var result = await _mediator.Send(new UpdateDocumentDetailCommand(accountCode, dto));
+                if (!result)
+                {
+                    return NotFound();
+                }
+                return NoContent();
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
         [HttpDelete("{accountCode}")]
         public async Task<IActionResult> DeleteDocumentDetail(int accountCode)
         {

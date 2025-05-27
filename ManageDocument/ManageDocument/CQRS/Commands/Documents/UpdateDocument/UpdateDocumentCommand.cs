@@ -39,7 +39,6 @@ namespace ManageDocument.CQRS.Commands.Documents.UpdateDocument
             document.DocumentDate = request.Dto.DocumentDate;
             document.DocumentType = request.Dto.DocumentType;
             document.Description = request.Dto.Description;
-            document.TotalAmount = request.Dto.TotalAmount;
 
             try
             {
