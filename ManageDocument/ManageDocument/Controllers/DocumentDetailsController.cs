@@ -1,11 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ManageDocument.Data;
 using ManageDocument.Entities;
 using ManageDocument.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
+using MediatR;
+using ManageDocument.CQRS.Commands.DocumentDetails.CreateDocumentDetail;
+using ManageDocument.CQRS.Commands.DocumentDetails.UpdateDocumentDetail;
+using ManageDocument.CQRS.Commands.DocumentDetails.DeleteDocumentDetail;
+using ManageDocument.CQRS.Queries.DocumentDetails.GetDocumentDetail;
+using ManageDocument.CQRS.Queries.DocumentDetails.GetDocumentDetails;
+using ManageDocument.CQRS.Queries.DocumentDetails.GetDocumentDetailsByDocument;
 
 namespace ManageDocument.Controllers
 {
@@ -13,94 +17,59 @@ namespace ManageDocument.Controllers
     [Route("api/[controller]")]
     public class DocumentDetailsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IMediator _mediator;
 
-        public DocumentDetailsController(ApplicationDbContext context)
+        public DocumentDetailsController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
 
         // GET: api/DocumentDetails
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DocumentDetail>>> GetDocumentDetails()
         {
-            return await _context.DocumentDetails
-                .Include(dd => dd.Document)
-                .ToListAsync();
+            var result = await _mediator.Send(new GetDocumentDetailsQuery());
+            return Ok(result);
         }
 
         // GET: api/DocumentDetails/5
         [HttpGet("{accountCode}")]
         public async Task<ActionResult<DocumentDetail>> GetDocumentDetail(int accountCode)
         {
-            var documentDetail = await _context.DocumentDetails
-                .Include(dd => dd.Document)
-                .FirstOrDefaultAsync(dd => dd.AccountCode == accountCode);
-
+            var documentDetail = await _mediator.Send(new GetDocumentDetailQuery(accountCode));
             if (documentDetail == null)
             {
                 return NotFound();
             }
-
-            return documentDetail;
+            return Ok(documentDetail);
         }
 
         // GET: api/DocumentDetails/document/5
         [HttpGet("document/{documentNumber}")]
         public async Task<ActionResult<IEnumerable<DocumentDetail>>> GetDocumentDetailsByDocument(int documentNumber)
         {
-            return await _context.DocumentDetails
-                .Where(dd => dd.DocumentNumber == documentNumber)
-                .ToListAsync();
+            var result = await _mediator.Send(new GetDocumentDetailsByDocumentQuery(documentNumber));
+            return Ok(result);
         }
 
         // POST: api/DocumentDetails
         [HttpPost]
         public async Task<ActionResult<DocumentDetail>> CreateDocumentDetail(CreateDocumentDetailDto dto)
         {
-            var documentDetail = new DocumentDetail
-            {
-                DocumentNumber = dto.DocumentNumber,
-                Description = dto.Description,
-                Amount = dto.Amount,
-                TransactionType = dto.TransactionType
-            };
-            _context.DocumentDetails.Add(documentDetail);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetDocumentDetail), new { accountCode = documentDetail.AccountCode }, documentDetail);
+            var accountCode = await _mediator.Send(new CreateDocumentDetailCommand(dto));
+            var documentDetail = await _mediator.Send(new GetDocumentDetailQuery(accountCode));
+            return CreatedAtAction(nameof(GetDocumentDetail), new { accountCode }, documentDetail);
         }
 
         // PUT: api/DocumentDetails/5
         [HttpPut("{accountCode}")]
         public async Task<IActionResult> UpdateDocumentDetail(int accountCode, UpdateDocumentDetailDto dto)
         {
-            var documentDetail = await _context.DocumentDetails.FindAsync(accountCode);
-            if (documentDetail == null)
+            var result = await _mediator.Send(new UpdateDocumentDetailCommand(accountCode, dto));
+            if (!result)
             {
                 return NotFound();
             }
-
-            documentDetail.Description = dto.Description;
-            documentDetail.Amount = dto.Amount;
-            documentDetail.TransactionType = dto.TransactionType;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DocumentDetailExists(accountCode))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
             return NoContent();
         }
 
@@ -108,21 +77,12 @@ namespace ManageDocument.Controllers
         [HttpDelete("{accountCode}")]
         public async Task<IActionResult> DeleteDocumentDetail(int accountCode)
         {
-            var documentDetail = await _context.DocumentDetails.FindAsync(accountCode);
-            if (documentDetail == null)
+            var result = await _mediator.Send(new DeleteDocumentDetailCommand(accountCode));
+            if (!result)
             {
                 return NotFound();
             }
-
-            _context.DocumentDetails.Remove(documentDetail);
-            await _context.SaveChangesAsync();
-
             return NoContent();
-        }
-
-        private bool DocumentDetailExists(int accountCode)
-        {
-            return _context.DocumentDetails.Any(e => e.AccountCode == accountCode);
         }
     }
 } 

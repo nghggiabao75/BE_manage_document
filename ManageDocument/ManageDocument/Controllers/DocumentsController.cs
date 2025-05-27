@@ -1,14 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ManageDocument.Data;
 using ManageDocument.Entities;
 using ManageDocument.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 using MediatR;
 using ManageDocument.CQRS.Commands.Documents.CreateDocument;
+using ManageDocument.CQRS.Commands.Documents.UpdateDocument;
+using ManageDocument.CQRS.Commands.Documents.DeleteDocument;
 using ManageDocument.CQRS.Queries.Documents.GetDocument;
+using ManageDocument.CQRS.Queries.Documents.GetDocuments;
 
 namespace ManageDocument.Controllers
 {
@@ -16,12 +16,10 @@ namespace ManageDocument.Controllers
     [Route("api/[controller]")]
     public class DocumentsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
         private readonly IMediator _mediator;
 
-        public DocumentsController(ApplicationDbContext context, IMediator mediator)
+        public DocumentsController(IMediator mediator)
         {
-            _context = context;
             _mediator = mediator;
         }
 
@@ -29,9 +27,8 @@ namespace ManageDocument.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Document>>> GetDocuments()
         {
-            return await _context.Documents
-                .Include(d => d.DocumentDetails)
-                .ToListAsync();
+            var result = await _mediator.Send(new GetDocumentsQuery());
+            return Ok(result);
         }
 
         // GET: api/Documents/5
@@ -43,7 +40,7 @@ namespace ManageDocument.Controllers
             {
                 return NotFound();
             }
-            return document;
+            return Ok(document);
         }
 
         // POST: api/Documents
@@ -59,33 +56,11 @@ namespace ManageDocument.Controllers
         [HttpPut("{documentNumber}")]
         public async Task<IActionResult> UpdateDocument(int documentNumber, UpdateDocumentDto dto)
         {
-            var document = await _context.Documents.FindAsync(documentNumber);
-            if (document == null)
+            var result = await _mediator.Send(new UpdateDocumentCommand(documentNumber, dto));
+            if (!result)
             {
                 return NotFound();
             }
-
-            document.DocumentDate = dto.DocumentDate;
-            document.DocumentType = dto.DocumentType;
-            document.Description = dto.Description;
-            document.TotalAmount = dto.TotalAmount;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DocumentExists(documentNumber))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
             return NoContent();
         }
 
@@ -93,21 +68,12 @@ namespace ManageDocument.Controllers
         [HttpDelete("{documentNumber}")]
         public async Task<IActionResult> DeleteDocument(int documentNumber)
         {
-            var document = await _context.Documents.FindAsync(documentNumber);
-            if (document == null)
+            var result = await _mediator.Send(new DeleteDocumentCommand(documentNumber));
+            if (!result)
             {
                 return NotFound();
             }
-
-            _context.Documents.Remove(document);
-            await _context.SaveChangesAsync();
-
             return NoContent();
-        }
-
-        private bool DocumentExists(int documentNumber)
-        {
-            return _context.Documents.Any(e => e.DocumentNumber == documentNumber);
         }
     }
 } 
