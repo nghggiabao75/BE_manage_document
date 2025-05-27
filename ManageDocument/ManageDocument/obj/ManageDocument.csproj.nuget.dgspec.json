@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Workspace\\BlaiseWorkSpace\\ManageDocument\\ManageDocument\\ManageDocument.csproj": {}
+    "C:\\Workspace\\BlaiseWorkSpace\\BE\\ManageDocument\\ManageDocument\\ManageDocument.csproj": {}
   },
   "projects": {
-    "C:\\Workspace\\BlaiseWorkSpace\\ManageDocument\\ManageDocument\\ManageDocument.csproj": {
+    "C:\\Workspace\\BlaiseWorkSpace\\BE\\ManageDocument\\ManageDocument\\ManageDocument.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Workspace\\BlaiseWorkSpace\\ManageDocument\\ManageDocument\\ManageDocument.csproj",
+        "projectUniqueName": "C:\\Workspace\\BlaiseWorkSpace\\BE\\ManageDocument\\ManageDocument\\ManageDocument.csproj",
         "projectName": "ManageDocument",
-        "projectPath": "C:\\Workspace\\BlaiseWorkSpace\\ManageDocument\\ManageDocument\\ManageDocument.csproj",
+        "projectPath": "C:\\Workspace\\BlaiseWorkSpace\\BE\\ManageDocument\\ManageDocument\\ManageDocument.csproj",
         "packagesPath": "C:\\Users\\Blaise\\.nuget\\packages\\",
-        "outputPath": "C:\\Workspace\\BlaiseWorkSpace\\ManageDocument\\ManageDocument\\obj\\",
+        "outputPath": "C:\\Workspace\\BlaiseWorkSpace\\BE\\ManageDocument\\ManageDocument\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
